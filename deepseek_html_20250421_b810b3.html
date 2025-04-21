@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin sản phẩm</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .product-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #d32f2f;
+            font-size: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .specs li {
+            margin-bottom: 8px;
+            list-style-type: disc;
+        }
+        .order-btn {
+            background: #527425;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="product-container" id="product-content">
+        <!-- Nội dung sản phẩm sẽ được điền bằng JavaScript -->
+        <p>Đang tải thông tin sản phẩm...</p>
+    </div>
+
+    <script>
+        // Danh sách sản phẩm
+        const products = {
+            "V001": {
+                name: "Vợt SmashStarter",
+                code: "V001",
+                price: "750,000 VNĐ",
+                originalPrice: "999,000 VNĐ",
+                status: "Còn hàng",
+                specs: [
+                    "Chất liệu: MITSUBISHI CARBON SHEET",
+                    "Độ cứng: Trung bình",
+                    "Điểm cân bằng: 290 ± 3 mm",
+                    "Trọng lượng: 4U / G5",
+                    "Chiều dài: 675mm",
+                    "Mức căng: ≤35lbs (15.8kg)"
+                ]
+            },
+            "V002": {
+                name: "Vợt WindBreaker 400",
+                code: "V002",
+                price: "820,000 VNĐ",
+                originalPrice: "1,100,000 VNĐ",
+                status: "Còn hàng",
+                specs: [
+                    "Độ cứng: Trung bình",
+                    "Khung vợt: Carbon Fiber",
+                    "Thân vợt: Carbon Fiber",
+                    "Trọng lượng: 4U",
+                    "Chu vi cán vợt: S2",
+                    "Sức căng tối đa: 30LBS",
+                    "Điểm cân bằng: 304 mm",
+                    "Màu sắc: Đỏ/Đen"
+                ]
+            },
+            // Thêm các sản phẩm khác tại đây...
+        };
+
+        // Lấy ID sản phẩm từ URL (ví dụ: ?id=V001)
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        // Hiển thị sản phẩm tương ứng
+        function showProduct() {
+            const product = products[productId];
+            if (product) {
+                document.getElementById("product-content").innerHTML = `
+                    <h1>${product.name}</h1>
+                    <p><strong>Mã:</strong> ${product.code} | <strong>Tình trạng:</strong> ${product.status}</p>
+                    
+                    <ul class="specs">
+                        ${product.specs.map(spec => `<li>${spec}</li>`).join('')}
+                    </ul>
+                    
+                    <div class="price">
+                        <span>${product.price}</span>
+                        ${product.originalPrice ? `<span style="text-decoration: line-through; color: #777; margin-left: 10px;">${product.originalPrice}</span>` : ''}
+                    </div>
+                    
+                    <!-- Form thanh toán (có thể thêm vào sau) -->
+                    <button class="order-btn" onclick="alert('Đã thêm ${product.name} vào giỏ hàng')">MUA NGAY</button>
+                `;
+            } else {
+                document.getElementById("product-content").innerHTML = "<p>Sản phẩm không tồn tại</p>";
+            }
+        }
+
+        // Chạy hàm khi trang tải xong
+        window.onload = showProduct;
+    </script>
+</body>
+</html>
